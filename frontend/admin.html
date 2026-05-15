@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+<style>
+body{font-family:Arial;padding:20px;background:#111;color:#fff}
+input,button{padding:10px;margin:5px}
+.card{background:#222;padding:15px;margin:10px 0;border-radius:10px}
+</style>
+</head>
+<body>
+
+<h1>Admin Panel</h1>
+
+<h2>Add Product</h2>
+
+<input id="name" placeholder="Name">
+<input id="price" placeholder="Price">
+<input id="category" placeholder="Category">
+<input id="image" placeholder="Image URL">
+<button onclick="addProduct()">Add</button>
+
+<hr>
+
+<h2>Products</h2>
+<div id="list"></div>
+
+<script>
+const API = "http://localhost:5000/api/products";
+
+async function loadProducts() {
+    const res = await fetch(API);
+    const data = await res.json();
+
+    let html = "";
+
+    data.forEach(p => {
+        html += `
+        <div class="card">
+            <h3>${p.name}</h3>
+            <p>$${p.price}</p>
+            <button onclick="del('${p._id}')">Delete</button>
+            <button onclick="edit('${p._id}')">Edit</button>
+        </div>`;
+    });
+
+    document.getElementById("list").innerHTML = html;
+}
+
+async function addProduct() {
+    await fetch(API,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+            name:name.value,
+            price:price.value,
+            category:category.value,
+            images:[image.value]
+        })
+    });
+
+    loadProducts();
+}
+
+async function del(id){
+    await fetch(API+"/"+id,{method:"DELETE"});
+    loadProducts();
+}
+
+async function edit(id){
+    const newName = prompt("New name:");
+    const newPrice = prompt("New price:");
+
+    await fetch(API+"/"+id,{
+        method:"PUT",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+            name:newName,
+            price:newPrice
+        })
+    });
+
+    loadProducts();
+}
+
+loadProducts();
+</script>
+
+</body>
+</html>

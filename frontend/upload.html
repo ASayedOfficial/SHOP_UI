@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Upload Panel</title>
+
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      margin:0;
+      padding:20px;
+      background:#0f0f0f;
+      color:#fff;
+    }
+
+    .upload-page{
+      max-width:1400px;
+      margin:auto;
+    }
+
+    .upload-box{
+      background:#1a1a1a;
+      padding:20px;
+      border-radius:12px;
+      margin-bottom:20px;
+      border:1px solid #333;
+    }
+
+    h2{
+      margin-top:0;
+      color:#1E90FF;
+    }
+
+    input, textarea, select{
+      width:100%;
+      padding:12px;
+      margin:8px 0;
+      border-radius:8px;
+      border:1px solid #333;
+      background:#111;
+      color:#fff;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    textarea{
+      min-height:100px;
+      resize:vertical;
+    }
+
+    button{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:8px;
+      background:#1E90FF;
+      color:#fff;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    button:hover{
+      background:#0a1e36;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    #productList{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:20px;
+      margin-top:20px;
+    }
+
+    .product-card{
+      background:#1a1a1a;
+      border:1px solid #333;
+      border-radius:12px;
+      padding:18px;
+    }
+
+    .product-card img.main{
+      width:100%;
+      height:220px;
+      object-fit:contain;
+      border-radius:10px;
+      margin-bottom:10px;
+      background:#222;
+    }
+
+    .gallery{
+      display:flex;
+      gap:6px;
+      margin-bottom:10px;
+      flex-wrap:wrap;
+    }
+
+    .gallery img{
+      width:65px;
+      height:65px;
+      object-fit:contain;
+      background:#222;
+      border-radius:8px;
+      padding:3px;
+    }
+
+    .old-price{
+      text-decoration:line-through;
+      color:#999;
+      margin-right:8px;
+    }
+
+    .new-price{
+      color:#1E90FF;
+      font-weight:bold;
+      font-size:18px;
+    }
+
+    .badge{
+      display:inline-block;
+      padding:4px 8px;
+      border-radius:6px;
+      background:#1E90FF;
+      font-size:12px;
+      margin:6px 4px 6px 0;
+    }
+
+    #previewBox{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    .preview-item{
+      position:relative;
+      width:90px;
+      height:90px;
+      border:1px solid #333;
+      border-radius:10px;
+      overflow:hidden;
+      background:#111;
+    }
+
+    .preview-item img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .remove-btn{
+      position:absolute;
+      top:2px;
+      right:2px;
+      width:22px;
+      height:22px;
+      border:none;
+      border-radius:50%;
+      background:red;
+      color:#fff;
+      font-size:12px;
+      cursor:pointer;
+      padding:0;
+    }
+
+    .small-text{
+      font-size:12px;
+      color:#aaa;
+      margin-top:6px;
+    }
+
+    .desc{
+      color:#ccc;
+      line-height:1.5;
+      margin-top:8px;
+    }
+
+    .section-title{
+      color:#1E90FF;
+      font-size:14px;
+      margin-top:10px;
+      margin-bottom:4px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="upload-page">
+
+<!-- ADD PRODUCT -->
+<div class="upload-box">
+  <h2>Add Product</h2>
+
+  <form id="productForm">
+
+    <input type="text" id="name" placeholder="Product Name" required>
+
+    <div class="grid-2">
+      <input type="text" id="category" placeholder="Category" required>
+      <input type="text" id="brand" placeholder="Brand">
+    </div>
+
+    <div class="grid-2">
+      <input type="number" id="new_price" placeholder="New Price" required>
+      <input type="number" id="old_price" placeholder="Old Price" required>
+    </div>
+
+    <div class="grid-2">
+      <input type="number" id="stock" placeholder="Stock">
+      <input type="number" id="rating" placeholder="Rating (0-5)" step="0.1">
+    </div>
+
+    <select id="available">
+      <option value="true">Available</option>
+      <option value="false">Not Available</option>
+    </select>
+
+    <textarea id="description" placeholder="Description"></textarea>
+    <textarea id="details" placeholder="Details / Specifications"></textarea>
+
+    <input type="file" id="file" multiple accept="image/*" required>
+
+    <div class="small-text">Maximum 3 images</div>
+    <div id="previewBox"></div>
+
+    <button type="submit">Add Product</button>
+  </form>
+</div>
+
+<!-- REMOVE PRODUCT -->
+<div class="upload-box">
+  <h2>Remove Product</h2>
+
+  <input type="number" id="remove_id" placeholder="Enter Product ID">
+  <input type="text" id="remove_name" placeholder="Enter Product Name">
+
+  <button onclick="removeProduct()">Remove Product</button>
+</div>
+
+<!-- VIEW PRODUCTS -->
+<div class="upload-box">
+  <h2>All Products</h2>
+  <button onclick="loadProducts()">Load Products</button>
+</div>
+
+<div id="productList"></div>
+
+</div>
+
+<script>
+
+// ================= IMAGE MANAGER =================
+const fileInput = document.getElementById("file");
+const previewBox = document.getElementById("previewBox");
+let selectedFiles = [];
+
+/* ❌ REMOVED problematic click reset
+fileInput.addEventListener("click", function(){
+  this.value = "";
+});
+*/
+
+fileInput.addEventListener("change", function(e){
+
+  const newFiles = Array.from(e.target.files);
+
+  // 🔥 FIX: replace instead of append (this was the bug)
+  selectedFiles = newFiles.slice(0, 3);
+
+  renderPreview();
+});
+
+function renderPreview(){
+  previewBox.innerHTML = "";
+
+  selectedFiles.forEach((file,index)=>{
+
+    const reader = new FileReader();
+
+    reader.onload = function(ev){
+
+      const div = document.createElement("div");
+      div.className = "preview-item";
+
+      div.innerHTML = `
+        <img src="${ev.target.result}">
+        <button type="button" class="remove-btn">X</button>
+      `;
+
+      div.querySelector("button").onclick = function(){
+        selectedFiles.splice(index,1);
+        renderPreview();
+      };
+
+      previewBox.appendChild(div);
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+
+// ================= ADD PRODUCT =================
+document.getElementById("productForm").addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  if(selectedFiles.length === 0){
+    alert("Please select image(s)");
+    return;
+  }
+
+  const formData = new FormData();
+
+  for(let i = 0; i < selectedFiles.length; i++){
+    formData.append("image", selectedFiles[i]);
+  }
+
+  const uploadRes = await fetch("http://localhost:4000/upload",{
+    method:"POST",
+    body:formData
+  });
+
+  const uploadData = await uploadRes.json();
+
+  if(!uploadData.success){
+    alert(uploadData.message || "Upload Failed");
+    return;
+  }
+
+  const product = {
+    name: document.getElementById("name").value,
+    category: document.getElementById("category").value,
+    brand: document.getElementById("brand").value,
+    new_price: document.getElementById("new_price").value,
+    old_price: document.getElementById("old_price").value,
+    stock: document.getElementById("stock").value,
+    rating: document.getElementById("rating").value,
+    available: document.getElementById("available").value === "true",
+    description: document.getElementById("description").value,
+    details: document.getElementById("details").value,
+    image: uploadData.image_url,
+    images: uploadData.images
+  };
+
+  const addRes = await fetch("http://localhost:4000/addproduct",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify(product)
+  });
+
+  const addData = await addRes.json();
+
+  if(addData.success){
+    alert("Product Added!");
+    document.getElementById("productForm").reset();
+    selectedFiles = [];
+    previewBox.innerHTML = "";
+    loadProducts();
+  }else{
+    alert("Failed to add product");
+  }
+});
+
+
+// ================= REMOVE PRODUCT =================
+async function removeProduct(){
+
+  const id = document.getElementById("remove_id").value;
+
+  const res = await fetch("http://localhost:4000/removeproduct",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({id})
+  });
+
+  const data = await res.json();
+
+  if(data.success){
+    alert("Removed!");
+    loadProducts();
+  }
+}
+
+
+// ================= FIX IMAGE URL =================
+function fixImage(img){
+  if(!img) return "https://via.placeholder.com/300x180?text=No+Image";
+
+  if(img.includes("localhost")){
+    img = img.replace("localhost","127.0.0.1");
+  }
+
+  if(!img.startsWith("http")){
+    img = "http://127.0.0.1:4000/images/" + img;
+  }
+
+  return img;
+}
+
+
+// ================= LOAD PRODUCTS =================
+async function loadProducts(){
+
+  const res = await fetch("http://localhost:4000/allproducts");
+  const products = await res.json();
+
+  const container = document.getElementById("productList");
+  container.innerHTML = "";
+
+  if(products.length === 0){
+    container.innerHTML = "<h3>No Products Found</h3>";
+    return;
+  }
+
+  products.forEach(function(p){
+
+    let mainImage = fixImage(p.image);
+
+    let allImages = [];
+
+    if(p.images && p.images.length > 0){
+      allImages = p.images.map(img => fixImage(img));
+    }else{
+      allImages = [mainImage];
+    }
+
+    let galleryHTML = "";
+    allImages.forEach(function(img){
+      galleryHTML += `
+        <img src="${img}" onerror="this.src='https://via.placeholder.com/60?text=No'">
+      `;
+    });
+
+    container.innerHTML += `
+      <div class="product-card">
+
+        <img class="main" src="${mainImage}" onerror="this.src='https://via.placeholder.com/300x180?text=No+Image'">
+
+        <div class="gallery">
+          ${galleryHTML}
+        </div>
+
+        <h3>${p.name}</h3>
+
+        <div class="badge">ID: ${p.id}</div>
+        <div class="badge">${p.category}</div>
+        <div class="badge">${p.brand || "No Brand"}</div>
+
+        <p>
+          <span class="old-price">$${p.old_price}</span>
+          <span class="new-price">$${p.new_price}</span>
+        </p>
+
+        <div class="badge">Stock: ${p.stock}</div>
+        <div class="badge">Rating: ${p.rating}</div>
+        <div class="badge">${p.available ? "Available" : "Not Available"}</div>
+
+        <div class="section-title">Description</div>
+        <div class="desc">${p.description || "-"}</div>
+
+        <div class="section-title">Details</div>
+        <div class="desc">${p.details || "-"}</div>
+
+      </div>
+    `;
+  });
+}
+
+// AUTO LOAD
+loadProducts();
+
+</script>
+
+</body>
+</html>

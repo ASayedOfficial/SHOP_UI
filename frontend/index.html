@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Products in Pakistan | Sonic Master</title>
+<!--=====WEB-ICON====-->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png"> 
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png"> 
+    <link rel="manifest" href="favicon_io/site.webmanifest">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head> 
+
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="main-header">
+
+    <!-- MENU BUTTON -->
+    <div class="menu-btn" id="menuBtn">☰</div>
+
+    <!-- LOGO -->
+    <div class="logo-container">
+        <a href="index.html">
+            <svg class="site-logo" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 400 60">
+
+            <defs>
+                <filter id="glow">
+                    <feGaussianBlur stdDeviation="3.5" result="blur"/>
+                    <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+
+            <rect width="400" height="60" fill="transparent"/>
+
+            <text x="15" y="40"
+            font-family="Tahoma, Arial, sans-serif"
+            font-size="50"
+            font-weight="bold"
+            fill="#ff3b00"
+            filter="url(#glow)">
+            Sonic
+            <animate attributeName="fill"
+                values="#ff3b00;#ff6a00;#ff1a00;#ff3b00"
+                dur="0.3s"
+                repeatCount="indefinite"/>
+            </text>
+
+            <text x="160" y="40"
+            font-family="Tahoma, Arial, sans-serif"
+            font-size="40"
+            font-weight="bold"
+            fill="#1E90FF"
+            filter="url(#glow)">
+            Master
+            <animate attributeName="fill"
+                values="#1E90FF;#00c3ff;#0066ff;#1E90FF"
+                dur="1.2s"
+                repeatCount="indefinite"/>
+            </text>
+
+            </svg>
+        </a>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-container">
+        <input type="text" placeholder="Search products...">
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="header-right">
+        <a href="index.html" style="color:#33e414;">Home</a>
+        <a href="contact.html">Contact</a>
+
+        <div class="cart-icon" id="cartIcon">
+            🛒 <span id="cartCount">0</span>
+        </div>
+    </div>
+
+</header>
+
+<!-- ================= SIDE MENU ================= -->
+<div class="side-menu" id="sideMenu">
+    <button id="closeMenu">✖</button>
+
+    <!-- ================= CATEGORY FILTER ================= -->
+<section class="categories">
+    <button class="category-btn" data-category="All">All</button>
+    <button class="category-btn" data-category="Electronics">Electronics</button>
+    <button class="category-btn" data-category="Beauty">Beauty</button>
+    <button class="category-btn" data-category="Home">Home</button>
+    <button class="category-btn" data-category="Sales">Sales</button>
+    <button class="category-btn" data-category="New Incomings">New Inncomings</button>
+    <button class="category-btn" data-category="Login">Login</button>
+
+</section>
+
+</div>
+
+<!-- ================= HERO SLIDER ================= -->
+<section class="hero-slider">
+
+    <div class="slide active">
+        <img src="images/slide1.jpg">
+        <div class="slide-content">
+            <h1>Sonic Master</h1>
+            <p>Premium Accessories Store</p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <img src="images/slide2.jpg">
+        <div class="slide-content">
+            <h1>New Collection</h1>
+            <p>Shop Latest Trends</p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <img src="images/slide3.jpg">
+        <div class="slide-content">
+            <h1>Hot Deals</h1>
+            <p>Up to 50% Off</p>
+        </div>
+    </div>
+
+</section>
+
+<!-- ===================== ABOUT AGENCY STYLE ===================== -->
+<section class="about-agency">
+
+    <div class="about-overlay">
+        <div class="about-container">
+            
+            <img src="images/about(5).jpeg" alt="About Us Image" class="about-image">
+
+            <a href="index.html" class="about-readmore">ORDER NOW 🤑</a>
+
+        </div>
+    </div>
+
+</section>
+
+<!-- ===================== SERVICES SECTION ===================== -->
+<section class="services-section">
+    <div class="services-header">
+        <h2>Our Services</h2>
+        <p style="color: rgb(0, 0, 0);">We provide the best quality products and support to our customers.</p>
+    </div>
+
+    <div class="services-grid">
+
+        <!-- 1 -->
+        <div class="service-card">
+            <div class="service-icon">📦</div>
+            <h3>Fast Delivery</h3>
+            <p>Get your products delivered quickly right at your doorstep.</p>
+        </div>
+
+        <!-- 2 -->
+        <div class="service-card">
+            <div class="service-icon">🔒</div>
+            <h3>Secure Payments</h3>
+            <p>Your payments are safe with our secure payment gateways.</p>
+        </div>
+
+        <!-- 3 -->
+        <div class="service-card">
+            <div class="service-icon">⭐</div>
+            <h3>Quality Products</h3>
+            <p>We only list high-quality accessories hand-picked by experts.</p>
+        </div>
+
+        <!-- 4 -->
+        <div class="service-card">
+            <div class="service-icon">💬</div>
+            <h3>24/7 Support</h3>
+            <p>We're here to help you anytime, all day, every day.</p>
+        </div>
+
+    </div>
+</section>
+
+<div id="gridControls" style="text-align:center;margin:20px;">
+    <button onclick="setGrid(2)">II</button>
+    <button onclick="setGrid(3)">III</button>
+    <button onclick="setGrid(4)">IIII</button>
+    <button onclick="setGrid(5)">IIIII</button>
+    <button onclick="setGrid(6)">IIIIII</button>
+    <button onclick="setGrid(7)">IIIIIII</button>
+</div>
+<!-- ================= PRODUCTS ================= -->
+<main>
+    <div class="product-container" id="productContainer"></div>
+</main>
+
+<!-- ================= CART ================= -->
+<div class="cart-sidebar" id="cartSidebar">
+    <button id="closeCart">Close ✖</button>
+    <div id="cartItems"></div>
+    <h3 id="cartTotal">Total: $0</h3>
+    <button id="checkoutBtn">Checkout</button>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay"></div>
+
+<!-- SOUNDS -->
+<audio id="hoverSound" preload="auto">
+    <source src="./sounds/hover.wav" type="audio/mpeg">
+</audio>
+
+<audio id="clickSound" preload="auto">
+    <source src="./sounds/click.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+window.API_URL = "http://localhost:5000/api/products";
+window.USE_BACKEND = true;
+</script>
+
+<script type="module" src="js/app.js"></script>
+
+<!-- ================= PRODUCT MODAL ================= -->
+<div class="modal" id="productModal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <img id="modalImage" src="" alt="" />
+        <h2 id="modalName"></h2>
+        <div id="modalDetails"></div>
+    </div>
+</div>
+
+<!-- ================= RECEIPT ================= -->
+<div class="receipt-modal" id="receiptModal">
+    <div class="receipt-content">
+        <h2>Choose Payment Method</h2>
+        <div class="payment-options">
+            <button class="payment-btn" data-method="Bank Account">Bank Account</button>
+            <button class="payment-btn" data-method="Easypaisa">Easypaisa</button>
+            <button class="payment-btn" data-method="PayPal">PayPal</button>
+            <button class="payment-btn" data-method="JazzCash">JazzCash</button>
+        </div>
+        <button id="closeReceipt">Cancel</button>
+    </div>
+</div>
+
+<!-- ===================== ABOUT DETAILS SECTION ===================== -->
+<section class="about-details">
+
+    <div class="about-details-container">
+
+
+
+    <!-- LEFT -->
+    <div class="about-left">
+    <div class="about-video">
+        <video autoplay muted loop playsinline>
+        <source src="images/Vedio(1).mp4" type="video/mp4">
+        </video>
+    </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="about-right">
+    <div class="about-video">
+        <video autoplay muted loop playsinline>
+        <source src="images/Vedio(2).mp4" type="video/mp4">
+        </video>
+    </div>
+    </div>
+
+</div>
+        <div>
+            <p>
+                SonicMaster was founded in 2020 with a vision to create a 
+                one-stop online marketplace for premium accessories. We started 
+                with a small team of passionate individuals who wanted to make 
+                high-quality products accessible to everyone in Pakistan and beyond.</p>
+
+        <copyright>copyright 2024 SayedXAccessories. All rights reserved 😉.</copyright>
+            
+        </div>
+
+
+    </div>
+
+</section>
+
+<script>
+    const videos = document.querySelectorAll(".about-video video");
+
+    videos.forEach(video => {
+    video.playbackRate = 0.75; // 1 = normal, 0.5 = slower, 0.75 = slightly slower
+    });
+</script>
+
+</body>
+</html>

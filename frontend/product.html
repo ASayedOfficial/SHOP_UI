@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Products in Pakistan | Sonic Master</title>
+
+    <!--=====WEB-ICON====-->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png"> 
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png"> 
+    <link rel="manifest" href="favicon_io/site.webmanifest">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head> 
+
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="main-header">
+
+    <!-- MENU BUTTON -->
+    <div class="menu-btn" id="menuBtn">☰</div>
+
+    <!-- LOGO -->
+    <div class="logo-container">
+        <a href="index.html">
+            <svg class="site-logo" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 400 60">
+
+            <defs>
+                <filter id="glow">
+                    <feGaussianBlur stdDeviation="3.5" result="blur"/>
+                    <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+
+            <rect width="400" height="60" fill="transparent"/>
+
+            <text x="15" y="40"
+            font-family="Tahoma, Arial, sans-serif"
+            font-size="50"
+            font-weight="bold"
+            fill="#ff3b00"
+            filter="url(#glow)">
+            Sonic
+            <animate attributeName="fill"
+                values="#ff3b00;#ff6a00;#ff1a00;#ff3b00"
+                dur="0.3s"
+                repeatCount="indefinite"/>
+            </text>
+
+            <text x="160" y="40"
+            font-family="Tahoma, Arial, sans-serif"
+            font-size="40"
+            font-weight="bold"
+            fill="#1E90FF"
+            filter="url(#glow)">
+            Master
+            <animate attributeName="fill"
+                values="#1E90FF;#00c3ff;#0066ff;#1E90FF"
+                dur="1.2s"
+                repeatCount="indefinite"/>
+            </text>
+
+            </svg>
+        </a>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-container">
+        <input type="text" placeholder="Search products...">
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="header-right">
+        <a href="index.html">Home</a>
+        <a href="contact.html">Contact</a>
+
+        <div class="cart-icon" id="cartIcon">
+            🛒 <span id="cartCount">0</span>
+        </div>
+    </div>
+
+</header>
+
+<!-- ================= SIDE MENU ================= -->
+<div class="side-menu" id="sideMenu">
+    <button id="closeMenu">✖</button>
+    <script src="js/menu.js"></script>
+
+    <!-- ================= CATEGORY FILTER ================= -->
+    <section class="categories">
+        <button class="category-btn" data-category="All">All</button>
+        <button class="category-btn" data-category="Electronics">Electronics</button>
+        <button class="category-btn" data-category="Beauty">Beauty</button>
+        <button class="category-btn" data-category="Home">Home</button>
+        <button class="category-btn" data-category="Sales">Sales</button>
+        <button class="category-btn" data-category="New Incomings">New Inncomings</button>
+        <button class="category-btn" data-category="Login">Login</button>
+    </section>
+</div>
+
+<!-- ===================== PRODUCT PAGE ===================== -->
+<main>
+    <section class="hero">
+        <div id="productDetails"></div>
+    </section>
+</main>
+
+<!-- ================= CART ================= -->
+<div class="cart-sidebar" id="cartSidebar">
+    <button id="closeCart">Close ✖</button>
+    <div id="cartItems"></div>
+    <h3 id="cartTotal">Total: $0</h3>
+    <button id="checkoutBtn">Checkout</button>
+</div>
+
+<div id="overlay"></div>
+
+<!-- ===================== SOUND SYSTEM ===================== -->
+<audio id="hoverSound" preload="auto">
+    <source src="./sounds/hover.wav" type="audio/mpeg">
+</audio>
+
+<audio id="clickSound" preload="auto">
+    <source src="./sounds/click.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ===================== SCRIPTS ===================== -->
+
+<!-- CART + MENU INIT -->
+<script type="module">
+    import { initCartUI } from "./js/cart.js";
+    import "./js/menu.js";
+
+    initCartUI();
+</script>
+
+<!-- PRODUCT PAGE SCRIPT -->
+<script type="module" src="js/product-page.js"></script>
+
+</body>
+</html>
